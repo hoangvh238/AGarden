@@ -30,6 +30,8 @@ public class EnemyDamagedReceiver : DamagedReceiver
     public override void Deduct(int deduct)
     {
         base.Deduct(deduct);
+
+        // for later change - not use currently
         if (!this.CheckHealthToProtect()) return;
         this.ProtectedSkill();
     }

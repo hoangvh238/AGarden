@@ -35,7 +35,7 @@ public class WarriorDamagedSender : DamagedSender
 
     protected virtual void SendDameEnemy(EnemyDamagedReceiver enemy)
     {
+        // deduct enemy health
         enemy.Deduct(this.dame);
-        this.DestroyObject();
     }
 }
