@@ -8,5 +8,6 @@ public class FrogDespawnOnEnable : DespawnOnEnable
     {
         base.DespawnObject();
         WarriorSpawner.Instance.Despawn(transform.parent);
+        Debug.Log("Despawn frog");
     }
 }
