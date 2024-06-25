@@ -7,7 +7,7 @@ public class DragTool : MonoBehaviour
     {
         managerGame = ManagerGame.Key;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (managerGame.DragObject != null)
         {

@@ -57,7 +57,10 @@ public class EnemyScanner : Scanner
         if (this.enemyFound != null) return;
         if (collision.name == "Scanner") return;
 
-        WarriorController warriorCtrl = collision.transform.parent.GetComponent<WarriorController>();
+		if (collision.gameObject.CompareTag("Buff"))  //Them dong ni cho con meo
+			return;                                  //
+
+		WarriorController warriorCtrl = collision.transform.parent.GetComponent<WarriorController>();
         if (warriorCtrl == null) return;
 
         this.enemyFound = collision.transform.parent;

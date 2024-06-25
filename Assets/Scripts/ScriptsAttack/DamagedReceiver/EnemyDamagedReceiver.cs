@@ -12,8 +12,7 @@ public class EnemyDamagedReceiver : DamagedReceiver
         this.LoadEnemyController();
         base.LoadComponents();
     }
-
-    protected override void LoadBoxCollider()
+	protected override void LoadBoxCollider()
     {
         base.LoadBoxCollider();
         this.boxComponent.offset = new Vector2(this.enemyCtrl.BoxDamagedReceiverSO.OffSetX, this.enemyCtrl.BoxDamagedReceiverSO.OffSetY);
@@ -38,6 +37,8 @@ public class EnemyDamagedReceiver : DamagedReceiver
     {
         base.OnDead();
         EnemySpawner.Instance.Despawn(transform.parent);
+        managerRateChest.GetComponent<RateChestManager>().AddKilledMonster();
+
     }
 
     protected virtual bool CheckHealthToProtect()

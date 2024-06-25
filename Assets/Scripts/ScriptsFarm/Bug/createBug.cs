@@ -13,7 +13,7 @@ public class createBug : MonoBehaviour
     void Update()
     {
         int day = TimeController.Instance.DayPresent;
-        if (day == 2 || day == 3)
+        if (day == 1 || day == 2)
         {
             if (day == 2) ratetime = 10f;
             else ratetime = 5f;

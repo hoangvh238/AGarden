@@ -43,8 +43,9 @@ public class TitleFarm : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (managerGame.DragObject != null && isFull == false)
+        if (managerGame.DragObject != null &&  !managerGame.DragObject.name.Contains("Tool") && isFull == false)
         {
+            Debug.Log("heelo" + collision.gameObject.name);
             image = Instantiate(imageSeeds[TypeSeed()], transform);
             managerGame.ContainerObject = this.gameObject;
         }
@@ -54,5 +55,10 @@ public class TitleFarm : MonoBehaviour
         if (image != null) Destroy(image);
         managerGame.ContainerObject = null;
         
+    }
+
+    public void ReleaseTitle()
+    {
+        isFull = false;
     }
 }

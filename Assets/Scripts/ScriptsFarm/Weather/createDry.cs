@@ -4,7 +4,7 @@ public class createDry : MonoBehaviour
 {
     public int numberDry = 0;
     private double timeNext;
-    private double rateTime = 2f;
+    private double rateTime = 4f;
 
     private GameObject seed;
     int createKeyRandom()
@@ -25,7 +25,7 @@ public class createDry : MonoBehaviour
     }
     private void Update()
     {
-        if (TimeController.Instance.DayPresent == 3)
+        if (TimeController.Instance.DayPresent == 1)
         {
             if (Time.time < timeNext) return;
             timeNext = Time.time + rateTime;

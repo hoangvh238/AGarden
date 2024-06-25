@@ -9,6 +9,7 @@ public class DamagedReceiver : AutoMonoBehaviour
 
     [SerializeField] protected BoxCollider2D boxComponent;
     [SerializeField] protected GameObject deadFX;
+	[SerializeField] protected GameObject managerRateChest;
 
     protected virtual void OnEnable()
     {
@@ -18,6 +19,7 @@ public class DamagedReceiver : AutoMonoBehaviour
     protected override void LoadComponents()
     {
         base.LoadComponents();
+        this.LoadManagerChest();
         this.LoadBoxCollider();
         this.LoadDeadFX();
         this.Reborn();
@@ -30,6 +32,12 @@ public class DamagedReceiver : AutoMonoBehaviour
         Debug.Log(transform.name + ": Load DeadFX", gameObject);
     }
 
+    protected virtual void LoadManagerChest()
+    {
+		if (this.managerRateChest != null) return;
+		this.managerRateChest = GameObject.Find("ManagerRateChest");
+		Debug.Log(transform.name + ": Load ManagerRateChest", gameObject);
+	}
     protected virtual void LoadBoxCollider()
     {
         if (this.boxComponent != null) return;
