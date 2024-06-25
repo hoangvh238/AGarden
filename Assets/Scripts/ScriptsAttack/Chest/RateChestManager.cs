@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class RateChestManager : MonoBehaviour
 {
+	[SerializeField] protected static RateChestManager instance;
+	public static RateChestManager Instance => instance;
+
     public WeightedRandomList<Transform> lootTable;
     //count spwan
     public int countSpawnChest;
+
     // cong vao ti le : xuat hien tien va warrior
     public float normalMonster =0; 
+
     //cong vao ti le : tinh linh tro giup
     public float hardMonster =0;
+
     // 4 loai ruong
     public List<GameObject> listChest = new List<GameObject>();
+
     // thang do random // start with 70-20-10- [0] [1] [2] [3]
    public List<int> rateSpawn = new List<int>();
     private void Update()
@@ -21,6 +28,7 @@ public class RateChestManager : MonoBehaviour
         {
             UpdateRateMedium();
             normalMonster -= 10;
+            countSpawnChest++;
         }
         if(countSpawnChest > 1)
         {
@@ -41,19 +49,23 @@ public class RateChestManager : MonoBehaviour
         }
 
     }
-    private void UpdateRateHight()
+    
+    public void AddKilledMonster()
     {
-
+        normalMonster += 10;
     }
     private void SpawnChest(List<GameObject> listChest, List<int> listRate)
     {
         Vector2 vector2 = Vector2.zero;
+
         lootTable.ClearList();
+
         for(int i=0; i < listChest.Count; i++)
         {
             lootTable.Add(listChest[i].transform, listRate[i]);
         }
         var placeFather = GameObject.Find("AttackScene");
+
         Instantiate(lootTable.GetRandom(), placeFather.transform);
     }
 }

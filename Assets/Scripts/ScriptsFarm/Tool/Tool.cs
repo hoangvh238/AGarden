@@ -1,45 +1,89 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Tool: MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
+public class Tool : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
 {
-    [SerializeField] GameObject tool;
-    [SerializeField] Canvas canva;
-    [SerializeField] GameObject toolPresent;
+	[SerializeField] private GameObject toolPrefab;
+	[SerializeField] private Canvas canvas;
+	private GameObject toolInstance;
 
-    public ManagerGame manager;
-    public void Start()
-    {
-        manager = ManagerGame.Key;
-    }
-    public void OnDrag(PointerEventData eventData)
-    {
-        toolPresent.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10);
-    }
-    void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
-    {
-        toolPresent = Instantiate(tool);
-        toolPresent.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition) + new Vector3(0, 0, 10);
+	private ManagerGame manager;
+	private Camera mainCamera;
+	private const float ScreenPointZ = 10.0f;
 
-        ManagerGame.Key.DragObject = toolPresent;
-    }
-    void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
-    {
-        if (manager.DragObject != null && manager.ContainerObject != null)
-        {
-            if (manager.DragObject.name == "ToolShovel(Clone)")
-                manager.ContainerObject.GetComponent<Seed>().DestroySeed(0);
+	void Start()
+	{
+		manager = ManagerGame.Key;
+		mainCamera = Camera.main;
 
-            if (manager.DragObject.name == "ToolCatching(Clone)")
-                manager.ContainerObject.GetComponent<Bug>().destroyBug();
+		if (manager == null)
+		{
+			Debug.LogError("ManagerGame.Key is not initialized.");
+		}
 
-            if (manager.DragObject.name == "ToolWater(Clone)")
-                manager.ContainerObject.GetComponent<Seed>().changeDry();
-        }
+		if (mainCamera == null)
+		{
+			Debug.LogError("Main camera is not found.");
+		}
+	}
 
-        Destroy(toolPresent);
-        ManagerGame.Key.DragObject = null;
-    }
+	public void OnDrag(PointerEventData eventData)
+	{
+		if (toolInstance == null) return;
+
+		UpdateToolInstancePosition();
+	}
+
+	public void OnPointerDown(PointerEventData eventData)
+	{
+		toolInstance = Instantiate(toolPrefab);
+		UpdateToolInstancePosition();
+		manager.DragObject = toolInstance;
+	}
+
+	public void OnPointerUp(PointerEventData eventData)
+	{
+		if (manager.DragObject == null || manager.ContainerObject == null)
+		{
+			ClearTool();
+			return;
+		};
+
+		var dragObjectName = manager.DragObject.name;
+		var containerObject = manager.ContainerObject;
+
+		if (dragObjectName.Contains("ToolShovel"))
+		{
+			containerObject.GetComponent<Seed>().DestroySeed(0);
+		}
+	
+		if (dragObjectName.Contains("ToolCatching"))
+		{
+			if (!containerObject.name.Contains("Nor"))
+			{
+				containerObject.GetComponent<Bug>().DestroyBug();
+			}
+		}
+
+		if (dragObjectName.Contains("ToolWater"))
+		{
+			containerObject.GetComponent<Seed>().ChangeDry();
+		}
+
+		ClearTool();
+		
+	}
+
+	private void UpdateToolInstancePosition()
+	{
+		Vector3 screenPoint = Input.mousePosition;
+		screenPoint.z = ScreenPointZ;
+		toolInstance.transform.position = mainCamera.ScreenToWorldPoint(screenPoint);
+	}
+
+	private void ClearTool()
+	{
+		Destroy(toolInstance);
+		manager.DragObject = null;
+	}
 }
-
-

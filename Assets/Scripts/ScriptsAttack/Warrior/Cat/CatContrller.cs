@@ -24,7 +24,7 @@ public class CatContrller : MonoBehaviour
     {
         animator = gameObject.GetComponent<Animator>();
         gameManager = GameObject.FindGameObjectWithTag("GameManager");
-        animator.SetBool("isBuff", true);
+        animator.SetBool("isBuff", true);   
         timeCycle = 6;
         buffTime = 0;
         sleepTime = 3;

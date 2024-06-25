@@ -26,8 +26,8 @@ public class WarriorScanner : Scanner
         this.rightDirection = this.warriorCtrl.ScannerSO.RightDirection;
 
         Vector3 positionWarrior = this.gameObject.transform.parent.position;
-        float xPosition = this.distanceMap / 2 * ((this.rightDirection) ? 1 : -1);
-
+        float xPosition = this.distanceMap / 2 *((this.rightDirection) ? 1 : -1);
+  
         this.LoadXDistanceScanner(positionWarrior, xPosition);
         this.LoadYDistanceScanner();
     }

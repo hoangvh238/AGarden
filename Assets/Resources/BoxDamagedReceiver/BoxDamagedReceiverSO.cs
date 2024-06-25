@@ -17,3 +17,4 @@ public class BoxDamagedReceiverSO : ScriptableObject
     public float SizeY => this.sizeY;
 
 }
+    

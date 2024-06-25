@@ -37,7 +37,7 @@ public class Attack : AutoMonoBehaviour
         else this.AttackEnemy();
     }
 
-    protected virtual bool CheckAttack()
+    protected virtual bool CheckAttack()    
     {
         if (this.scannerObject.EnemyFound != null) return true;
         return false;

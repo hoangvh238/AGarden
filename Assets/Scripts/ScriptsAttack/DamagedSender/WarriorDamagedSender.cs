@@ -31,6 +31,7 @@ public class WarriorDamagedSender : DamagedSender
         EnemyDamagedReceiver dameToObj = obj.GetComponent<EnemyDamagedReceiver>();
         if (dameToObj == null) return;
         this.SendDameEnemy(dameToObj);
+        obj.GetComponent<BulletDespawn>().DespawnObject();
     }
 
     protected virtual void SendDameEnemy(EnemyDamagedReceiver enemy)
